@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2beta7
+kind: Config
+metadata:
+  name: internet-speeds
+build:
+  artifacts:
+  - image: seppler/internet-speeds-nginx
+    docker:
+      dockerfile: Dockerfile-frontend
+  - image: seppler/internet-speeds
+deploy:
+  kubectl:
+    manifests:
+    - k8s/cronjob.yaml
+    - k8s/frontend.yaml
+    - k8s/ingress.yaml
+    - k8s/pv.yaml
+    - k8s/pvc.yaml
+    - k8s/service.yaml
