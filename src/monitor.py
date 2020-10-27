@@ -11,6 +11,18 @@ def run_speedtest():
 
   return downspeed, upspeed
 
+def init_db(dbFile):
+  db = sqlite3.connect(dbFile)
+  dbc = db.cursor()
+
+  try:
+    dbc.execute('SELECT * FROM speedtests;')
+  except:
+    dbc.execute('CREATE TABLE "speedtests" ("entry_num"	INTEGER NOT NULL UNIQUE, "time"	TEXT, "downspeed"	INTEGER, "upspeed"	INTEGER, PRIMARY KEY("entry_num" AUTOINCREMENT));')
+
+  db.commit()
+  dbc.close()
+
 def update_db(dbFile, downspeed, upspeed):
   db = sqlite3.connect(dbFile)
   dbc = db.cursor()
@@ -30,6 +42,8 @@ def clean_db(dbFile):
   dbc.close()
 
 def main(dbFile):
+  init_db(dbFile)
+
   downspeed, upspeed = run_speedtest()
   update_db(dbFile, downspeed, upspeed)
   clean_db(dbFile)
