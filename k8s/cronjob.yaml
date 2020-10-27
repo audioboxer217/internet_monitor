@@ -1,0 +1,28 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: generate-graphs
+  namespace: internet-speeds
+spec:
+  schedule: "0 */4 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: generate-graphs
+            image: seppler/internet-speeds:1.0.0
+            volumeMounts:
+            - name: db
+              mountPath: /db
+            - name: output
+              mountPath: /output
+          restartPolicy: OnFailure
+          volumes:
+          - name: db
+            persistentVolumeClaim:
+              claimName: internet-speeds-db
+          - name: output
+            persistentVolumeClaim:
+              claimName: internet-speeds-graphs
+

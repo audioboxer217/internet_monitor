@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: internet-speeds
+  name: internet-speeds
+  namespace: internet-speeds
+spec:
+  ports:
+  - port: 3001
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: internet-speeds
+    use: frontend
+  sessionAffinity: None
+  type: NodePort
+

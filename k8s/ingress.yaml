@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    cert-manager.io/cluster-issuer: vault-issuer
+    # traefik.frontend.rule.type: PathPrefixStrip
+  name: internet-speeds
+  namespace: internet-speeds
+spec:
+  rules:
+  - host: codaubuntu
+    http:
+      paths:
+      - backend:
+          serviceName: internet-speeds
+          servicePort: 3001
+        path: /internet-speeds
+  - host: audioboxer.onthewifi.com
+    http:
+      paths:
+      - backend:
+          serviceName: internet-speeds
+          servicePort: 3001
+        path: /internet-speeds
+  tls:
+  - hosts:
+    - audioboxer.onthewifi.com
+    secretName: ingress-cert
