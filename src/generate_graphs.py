@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import sqlite3
 import argparse
+from datetime import datetime
 
 def get_numbers(dbFile, type):
   db = sqlite3.connect(dbFile)
@@ -10,7 +11,11 @@ def get_numbers(dbFile, type):
   query = f'SELECT {type} FROM speedtests'
   res_list = []
   for entry in dbc.execute(query):
-    res_list.append(entry[0])
+    item = entry[0]
+    if type == 'time':
+      time = datetime.strptime(item, '%Y-%m-%d %H:%M:%S')
+      item = datetime.strftime(time,'%m-%d %H:%M')
+    res_list.append(item)
 
   dbc.close()
 
