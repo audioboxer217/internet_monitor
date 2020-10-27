@@ -4,6 +4,13 @@ import sqlite3
 import argparse
 
 
+def run_speedtest():
+  s = speedtest.Speedtest()
+  downspeed = round((round(s.download()) / 1048576), 2)
+  upspeed = round((round(s.upload()) / 1048576), 2)
+
+  return downspeed, upspeed
+
 def update_db(dbFile, downspeed, upspeed):
   db = sqlite3.connect(dbFile)
   dbc = db.cursor()
@@ -23,12 +30,9 @@ def clean_db(dbFile):
   dbc.close()
 
 def main(dbFile):
-  s = speedtest.Speedtest()
-  downspeed = round((round(s.download()) / 1048576), 2)
-  upspeed = round((round(s.upload()) / 1048576), 2)
-
+  downspeed, upspeed = run_speedtest()
   update_db(dbFile, downspeed, upspeed)
-  clean_db(args.sqliteFile)
+  clean_db(dbFile)
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()

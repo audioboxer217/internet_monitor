@@ -3,13 +3,8 @@ import matplotlib.ticker as ticker
 import sqlite3
 import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--dbfile", dest="sqliteFile", help="Specify a SQLite File", default="/db/internet_monitor.db")
-parser.add_argument("--output", help="Location to store the generated graphs", default="/output")
-args = parser.parse_args()
-db = sqlite3.connect(args.sqliteFile)
-
-def get_numbers(type):
+def get_numbers(dbFile, type):
+  db = sqlite3.connect(dbFile)
   dbc = db.cursor()
 
   query = f'SELECT {type} FROM speedtests'
@@ -21,7 +16,7 @@ def get_numbers(type):
 
   return res_list
 
-def gen_line_graph(name, times, downspeeds, upspeeds):
+def gen_line_graph(name, times, downspeeds, upspeeds, output):
   # plt.figure(30, 30)
   plt.plot(times, downspeeds, label='download', color='r')
   plt.plot(times, upspeeds, label='upload', color='b')
@@ -29,15 +24,20 @@ def gen_line_graph(name, times, downspeeds, upspeeds):
   plt.ylabel('speed in Mb/s')
   plt.title(name)
   plt.legend()
-  plt.savefig(args.output + "/" + name.lower().replace(' ','_') + ".png", bbox_inches='tight')
+  plt.savefig(output + "/" + name.lower().replace(' ','_') + ".png", bbox_inches='tight')
 
 
-def main():
-  times = get_numbers('time')
-  downspeeds = get_numbers('downspeed')
-  upspeeds = get_numbers('upspeed')
+def main(dbFile, output):
+  times = get_numbers(dbFile, 'time')
+  downspeeds = get_numbers(dbFile, 'downspeed')
+  upspeeds = get_numbers(dbFile, 'upspeed')
 
-  gen_line_graph("Internet Speeds", times, downspeeds, upspeeds)
+  gen_line_graph("Internet Speeds", times, downspeeds, upspeeds, output)
 
 if __name__ == "__main__":
-  main()
+  parser = argparse.ArgumentParser()
+  parser.add_argument("--dbfile", dest="sqliteFile", help="Specify a SQLite File", default="/db/internet_monitor.db")
+  parser.add_argument("--output", help="Location to store the generated graphs", default="/output")
+  args = parser.parse_args()
+
+  main(args.sqliteFile, args.output)
