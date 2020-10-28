@@ -18,7 +18,7 @@ def init_db(dbFile):
   try:
     dbc.execute('SELECT * FROM speedtests;')
   except:
-    dbc.execute('CREATE TABLE "speedtests" ("entry_num"	INTEGER NOT NULL UNIQUE, "time"	TEXT, "downspeed"	INTEGER, "upspeed"	INTEGER, PRIMARY KEY("entry_num" AUTOINCREMENT));')
+    dbc.execute('CREATE TABLE "speedtests" ("entry_num"	INTEGER NOT NULL UNIQUE, "date" TEXT, "time"	TEXT, "downspeed"	INTEGER, "upspeed"	INTEGER, PRIMARY KEY("entry_num" AUTOINCREMENT));')
 
   db.commit()
   dbc.close()
@@ -27,7 +27,7 @@ def update_db(dbFile, downspeed, upspeed):
   db = sqlite3.connect(dbFile)
   dbc = db.cursor()
   
-  dbc.execute("INSERT INTO speedtests ('time', 'downspeed', 'upspeed') VALUES (datetime('now'), ?, ?);", (downspeed, upspeed))
+  dbc.execute("INSERT INTO speedtests ('date', 'time', 'downspeed', 'upspeed') VALUES (date('now', '-5 hour'),strftime('%H:%M', 'now', '-5 hour'),  ?, ?);", (downspeed, upspeed))
 
   db.commit()
   dbc.close()
@@ -36,7 +36,7 @@ def clean_db(dbFile):
   db = sqlite3.connect(dbFile)
   dbc = db.cursor()
 
-  dbc.execute("DELETE FROM speedtests WHERE time <= datetime('now','-30 day')")
+  dbc.execute("DELETE FROM speedtests WHERE date <= date('now','-30 day')")
 
   db.commit()
   dbc.close()
