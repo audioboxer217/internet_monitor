@@ -27,7 +27,7 @@ def update_db(dbFile, downspeed, upspeed):
   db = sqlite3.connect(dbFile)
   dbc = db.cursor()
   
-  dbc.execute("INSERT INTO speedtests ('date', 'time', 'downspeed', 'upspeed') VALUES (date('now', '-5 hour'),strftime('%H:%M', 'now', '-5 hour'),  ?, ?);", (downspeed, upspeed))
+  dbc.execute("INSERT INTO speedtests ('date', 'time', 'downspeed', 'upspeed') VALUES (date('now', '-6 hour'),strftime('%H:%M', 'now', '-6 hour'),  ?, ?);", (downspeed, upspeed))
 
   db.commit()
   dbc.close()
