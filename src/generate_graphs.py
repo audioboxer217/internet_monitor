@@ -38,6 +38,8 @@ def gen_line_graph(name, times, downspeeds, upspeeds, output):
 
 
 def main(dbFile, output):
+
+  print("Calculating numbers")
   today = get_numbers(dbFile, 0)
   yesterday = get_numbers(dbFile, 1)
   two_days = get_numbers(dbFile, 2)
@@ -47,13 +49,19 @@ def main(dbFile, output):
   six_days = get_numbers(dbFile, 6)
   seven_days = get_numbers(dbFile, 7)
 
-  gen_line_graph("Today", today[0], today[1], today[2], output)
-  gen_line_graph("Yesterday", yesterday[0], yesterday[1], yesterday[2], output)
-  gen_line_graph("Two Days Ago", two_days[0], two_days[1], two_days[2], output)
-
   avg_down = [statistics.mean(yesterday[1]), statistics.mean(two_days[1]), statistics.mean(three_days[1]), statistics.mean(four_days[1]), statistics.mean(five_days[1]), statistics.mean(six_days[1]), statistics.mean(seven_days[1])]
   avg_up = [statistics.mean(yesterday[2]), statistics.mean(two_days[2]), statistics.mean(three_days[2]), statistics.mean(four_days[2]), statistics.mean(five_days[2]), statistics.mean(six_days[2]), statistics.mean(seven_days[2])]
 
+  print("Generating updated graphs")
+  print("  'Today' graph")
+  gen_line_graph("Today", today[0], today[1], today[2], output)
+  print("  'Yesterday' graph")
+  gen_line_graph("Yesterday", yesterday[0], yesterday[1], yesterday[2], output)
+  print("  'Two days ago' graph")
+  gen_line_graph("Two Days Ago", two_days[0], two_days[1], two_days[2], output)
+
+
+  print("  'Daily Average' graph")
   gen_line_graph("Daily Average", ["7","6","5","4","3","2","1"], avg_down, avg_up, output)
 
 
