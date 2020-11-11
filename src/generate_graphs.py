@@ -45,16 +45,16 @@ def main(dbFile, output):
   four_days = get_numbers(dbFile, 4)
   five_days = get_numbers(dbFile, 5)
   six_days = get_numbers(dbFile, 6)
-  # seven_days = get_numbers(dbFile, 7)
+  seven_days = get_numbers(dbFile, 7)
 
   gen_line_graph("Today", today[0], today[1], today[2], output)
   gen_line_graph("Yesterday", yesterday[0], yesterday[1], yesterday[2], output)
   gen_line_graph("Two Days Ago", two_days[0], two_days[1], two_days[2], output)
 
-  avg_down = [statistics.mean(yesterday[1]), statistics.mean(two_days[1]), statistics.mean(three_days[1]), statistics.mean(four_days[1]), statistics.mean(five_days[1]), statistics.mean(six_days[1])] #, statistics.mean(seven_days[1])]
-  avg_up = [statistics.mean(yesterday[2]), statistics.mean(two_days[2]), statistics.mean(three_days[2]), statistics.mean(four_days[2]), statistics.mean(five_days[2]), statistics.mean(six_days[2])] #, statistics.mean(seven_days[2])]
+  avg_down = [statistics.mean(yesterday[1]), statistics.mean(two_days[1]), statistics.mean(three_days[1]), statistics.mean(four_days[1]), statistics.mean(five_days[1]), statistics.mean(six_days[1]), statistics.mean(seven_days[1])]
+  avg_up = [statistics.mean(yesterday[2]), statistics.mean(two_days[2]), statistics.mean(three_days[2]), statistics.mean(four_days[2]), statistics.mean(five_days[2]), statistics.mean(six_days[2]), statistics.mean(seven_days[2])]
 
-  gen_line_graph("Daily Average", ["6","5","4","3","2","1"], avg_down, avg_up, output)
+  gen_line_graph("Daily Average", ["7","6","5","4","3","2","1"], avg_down, avg_up, output)
 
 
 if __name__ == "__main__":
