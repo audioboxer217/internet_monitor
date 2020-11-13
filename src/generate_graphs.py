@@ -49,8 +49,8 @@ def main(dbFile, output):
   six_days = get_numbers(dbFile, 6)
   seven_days = get_numbers(dbFile, 7)
 
-  avg_down = [statistics.mean(yesterday[1]), statistics.mean(two_days[1]), statistics.mean(three_days[1]), statistics.mean(four_days[1]), statistics.mean(five_days[1]), statistics.mean(six_days[1]), statistics.mean(seven_days[1])]
-  avg_up = [statistics.mean(yesterday[2]), statistics.mean(two_days[2]), statistics.mean(three_days[2]), statistics.mean(four_days[2]), statistics.mean(five_days[2]), statistics.mean(six_days[2]), statistics.mean(seven_days[2])]
+  avg_down = [statistics.mean(seven_days[1]), statistics.mean(six_days[1]), statistics.mean(five_days[1]), statistics.mean(four_days[1]), statistics.mean(three_days[1]), statistics.mean(two_days[1]), statistics.mean(yesterday[1])]
+  avg_up = [statistics.mean(seven_days[2]), statistics.mean(six_days[2]), statistics.mean(five_days[2]), statistics.mean(four_days[2]), statistics.mean(three_days[2]), statistics.mean(two_days[2]), statistics.mean(yesterday[2])]
 
   print("Generating updated graphs")
   print("  'Today' graph")
